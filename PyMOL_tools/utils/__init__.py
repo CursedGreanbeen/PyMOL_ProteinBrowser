@@ -3,17 +3,37 @@
 from .config import config
 from .fasta_handler import (
     extract_chain_ids,
-    filter_fasta_by_chains,
-    remove_chains_from_fasta,
-    append_fasta_content,
-    filter_original_fasta,
+    edit_fasta_header,
+    parse_fasta,
+    serialize_fasta,
+    remove_chain,
+    update_sequence,
+    read_fasta_file,
+    write_fasta_file,
+)
+from .pymol_utils import (
+    get_browser,
+    set_browser,
+    get_current_object,
+    get_selected_chains,
+    _get_sequence_from_pymol,
+    save_cif,
 )
 
 __all__ = [
     'config',
     'extract_chain_ids',
-    'filter_fasta_by_chains',
-    'remove_chains_from_fasta',
-    'append_fasta_content',
-    'filter_original_fasta',
+    'edit_fasta_header',
+    'parse_fasta',
+    'serialize_fasta',
+    'remove_chain',
+    'update_sequence',
+    'read_fasta_file',
+    'write_fasta_file',
+    'get_browser',
+    'set_browser',
+    'get_current_object',
+    'get_selected_chains',
+    '_get_sequence_from_pymol',
+    'save_cif'
 ]

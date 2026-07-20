@@ -1,110 +1,44 @@
-"""
-Регистрация команд браузера в PyMOL.
-
-ТОЛЬКО обёртки для cmd.extend — без бизнес-логики.
-"""
 from pymol import cmd
 
-from ..core.browser import browse as core_browse, get_browser
+from ..core.browser import browse as core_browse
+from ..utils.pymol_utils import get_browser
+from ..utils.config import config
+from ..utils.fasta_handler import read_fasta_file
 
 
 def _browse_next():
-    """Загружает следующую структуру"""
-    browser = get_browser()
-    if browser:
-        browser.load_next()
-    else:
-        print("Сначала вызовите browse('/path/to/folder')")
-
+    get_browser().next()
 
 def _browse_previous():
-    """Загружает предыдущую структуру"""
-    browser = get_browser()
-    if browser:
-        browser.load_previous()
-    else:
-        print("Сначала вызовите browse('/path/to/folder')")
-
+    get_browser().previous()
 
 def _browse_first():
-    """Загружает первую структуру"""
-    browser = get_browser()
-    if browser:
-        browser.load_first()
-    else:
-        print("Сначала вызовите browse('/path/to/folder')")
+    get_browser().first()
 
-
-def _browse_load(index):
-    """Загружает структуру по номеру (1-indexed)"""
-    browser = get_browser()
-    if browser:
-        browser.load_specific(index - 1)
-    else:
-        print("Сначала вызовите browse('/path/to/folder')")
-
+def _browse_load(n: int):
+    get_browser().load(int(n))
 
 def _browse_list():
-    """Показывает список всех структур"""
-    browser = get_browser()
-    if browser:
-        browser.list_all()
-    else:
-        print("Сначала вызовите browse('/path/to/folder')")
-
+    get_browser().list()
 
 def _browse_color():
-    """Раскрашивает цепи текущей структуры"""
-    browser = get_browser()
-    if browser:
-        browser.color_chains()
+    get_browser().color_chains()
+
+
+def _show_fasta(original: bool = False):
+    """Показывает FASTA текущего объекта."""
+    obj_name = get_browser().current_object
+    
+    if original:
+        fasta_path = config.get_original_fasta_path(obj_name)
     else:
-        print("Сначала вызовите browse('/path/to/folder')")
+        fasta_path = config.get_fasta_path(obj_name)
 
-
-def _show_fasta(if_original=False):
-    """
-    Показывает содержимое FASTA-файла.
-
-    Args:
-        if_original: True для оригинального FASTA (fasta-sequences),
-                    False для отфильтрованного (fasta-filtered, дефолт)
-    """
-    browser = get_browser()
-    if not browser or not browser.current_obj_name:
-        print("Ошибка: нет загруженной структуры")
-        print("Сначала загрузите структуру через browse_next(), browse_first() и т.д.")
-        return
-
-    from ..utils.config import config
-
-    base_name = browser.current_obj_name.replace("_cropped", "")
-
-    if if_original:
-        folder = config.get_fasta_original_folder()
-    else:
-        folder = config.get_fasta_folder()
-
-    fasta_path = folder / f"{base_name}.fasta"
-
-    if not fasta_path.exists():
-        folder_type = "оригинальный" if if_original else "отфильтрованный"
-        print(f"Предупреждение: {folder_type} FASTA-файл не найден: {fasta_path}")
-        return
-
-    print(f"\n{'='*60}")
-    print(f"{'Оригинальный ' if if_original else ''}FASTA-файл: {fasta_path}")
-    print(f"{'='*60}\n")
-
-    try:
-        with open(fasta_path, 'r') as f:
-            content = f.read()
+    content = read_fasta_file(fasta_path)
+    if content:
         print(content)
-    except Exception as e:
-        print(f"Ошибка чтения FASTA: {e}")
-
-    print(f"{'='*60}\n")
-    return fasta_path
+    else:
+        print(f"[browser] FASTA-файл не найден: {fasta_path}")
 
 
 def _show_browser_commands():

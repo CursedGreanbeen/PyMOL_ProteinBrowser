@@ -6,13 +6,14 @@
 from pathlib import Path
 
 # Базовая директория проекта
-BASE_DIR = Path("/home/mullagaliamova/ClaudeWorkspace/PROJECTS/cdr-h3-folding")
+BASE_DIR = Path("/home/mullagaliamova/ClaudeWorkspace/PROJECTS/cdr-h3-folding/scripts/PyMOL_ProteinBrowser")
 
-# Дефолтные пути
-CIF_FOLDER = BASE_DIR / "CIFs-filtered"
-CIF_ORIGINAL_FOLDER = BASE_DIR / "CIFs"
-FASTA_FOLDER = BASE_DIR / "fasta-filtered"
-FASTA_ORIGINAL_FOLDER = BASE_DIR / "fasta-sequences"
+# Дефолтные пути (относительно проекта, а не PyMOL_ProteinBrowser)
+PROJECT_ROOT = Path("/home/mullagaliamova/ClaudeWorkspace/PROJECTS/cdr-h3-folding")
+CIF_FOLDER = PROJECT_ROOT / "CIFs-filtered"
+CIF_ORIGINAL_FOLDER = PROJECT_ROOT / "CIFs"
+FASTA_FOLDER = PROJECT_ROOT / "fasta-filtered"
+FASTA_ORIGINAL_FOLDER = PROJECT_ROOT / "fasta-sequences"
 
 
 class Config:

@@ -37,6 +37,5 @@ def show_welcome():
     print("Для подробной информации вызовите:")
     print("  show_browser_commands()")
     print("  show_cleanup_commands()")
-    print("  show_fasta_edit_commands()")
     print()
     print("="*60 + "\n")

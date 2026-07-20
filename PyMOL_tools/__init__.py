@@ -1,30 +1,14 @@
-"""
-PyMOL_tools — набор инструментов для работы с белковыми структурами в PyMOL.
-
-Использование:
-    run /home/.../scripts/PyMOL_tools
-
-Это загрузит все команды и покажет приветственное сообщение.
-
-Архитектура:
-    - core/         : Бизнес-логика (без PyMOL cmd.extend)
-    - commands/     : Регистрация команд в PyMOL (обёртки)
-    - utils/        : Утилиты (config, fasta_handler)
-    - __init__.py   : Точка входа (регистрация + приветствие)
-"""
-
-# Регистрируем все команды в PyMOL
-from .commands import (
-    register_browser_commands,
-    register_cleanup_commands,
-    register_fasta_edit_commands,
-)
-
-# Показываем приветствие
+from .commands.browser_cmds import register_browser_commands
+from .commands.cleanup_cmds import register_cleanup_commands
+from .commands.file_ops_cmds import register_file_ops_commands
 from .utils.welcome import show_welcome
 
-# Вызываем регистрацию и приветствие при загрузке
-register_browser_commands()
-register_cleanup_commands()
-register_fasta_edit_commands()
+
+def register_all_commands():
+    register_browser_commands()
+    register_cleanup_commands()
+    register_file_ops_commands()
+
+
+register_all_commands()
 show_welcome()

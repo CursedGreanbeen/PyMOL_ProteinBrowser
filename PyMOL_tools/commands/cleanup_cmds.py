@@ -8,23 +8,23 @@ from pymol import cmd
 from ..core.cleanup import (
     cleanup_selected_chains,
     remove_non_protein_components,
-    append_fasta_sequences,
     crop_range,
 )
 from ..utils.config import config
 
 
 def _show_cleanup_commands():
-    """Показывает список команд cleanup pipeline."""
+    """Показывает список команд cleanup"""
     print("\n" + "="*60)
     print("Доступные команды cleanup_pipeline:")
     print("="*60)
-    print("  cleanup_selected()   - удалить выбранные цепи")
-    print("  remove_non_protein() - удалить всё, что не protein")
+    print("  cleanup_selected()    - удалить выбранные цепи")
+    print("  remove_non_protein()  - удалить всё, что не protein")
     print("  append_fasta(content) - добавить FASTA-записи")
     print("  crop_range()          - обрезать residues в selection")
-    print("  set_paths(...)       - установить пути на сеанс")
-    print("  show_cleanup_commands() - показать это сообщение")
+    print("  append_fasta(content) - добавить FASTA-записи")
+    print("  revert_to_original()  - откатить файлы к оригиналу")
+    print("  set_paths(...)        - установить пути на сеанс")
     print("="*60 + "\n")
 
 
@@ -52,7 +52,6 @@ def register_cleanup_commands():
     """Регистрирует все команды cleanup pipeline в PyMOL."""
     cmd.extend("cleanup_selected", cleanup_selected_chains)
     cmd.extend("remove_non_protein", remove_non_protein_components)
-    cmd.extend("append_fasta", append_fasta_sequences)
     cmd.extend("crop_range", crop_range)
     cmd.extend("set_paths", _set_session_paths)
     cmd.extend("show_cleanup_commands", _show_cleanup_commands)
