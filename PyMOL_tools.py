@@ -2,7 +2,7 @@
 Алиас для загрузки PyMOL_tools.
 
 Использование:
-    run /home/.../scripts/PyMOL_tools.py
+    run /home/.../scripts/PyMOL_ProteinBrowser/PyMOL_tools.py
 """
 import sys
 import importlib.util
