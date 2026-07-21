@@ -1,7 +1,12 @@
-from pymol import cmd
-from ..core.browser import ProteinBrowser
+from __future__ import annotations
+from typing import TYPE_CHECKING
 
-_browser_instance: ProteinBrowser | None = None
+if TYPE_CHECKING:
+    from ..core.browser import ProteinBrowser
+
+from pymol import cmd
+
+_browser_instance: "ProteinBrowser | None" = None
 
 
 def get_browser() -> ProteinBrowser:

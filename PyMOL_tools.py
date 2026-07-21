@@ -41,7 +41,7 @@ from PyMOL_tools.commands.browser_cmds import (
     _browse_next as browse_next,
     _browse_previous as browse_prev,
     _browse_first as browse_first,
-    _browse_load as browse_load,
+    _browse_spec as browse_spec,
     _browse_list as browse_list,
     _browse_color as browse_color,
     _show_fasta as show_fasta,
@@ -54,7 +54,7 @@ globals()['get_browser'] = get_browser
 globals()['browse_next'] = browse_next
 globals()['browse_prev'] = browse_prev
 globals()['browse_first'] = browse_first
-globals()['browse_load'] = browse_load
+globals()['browse_spec'] = browse_spec
 globals()['browse_list'] = browse_list
 globals()['browse_color'] = browse_color
 globals()['show_fasta'] = show_fasta

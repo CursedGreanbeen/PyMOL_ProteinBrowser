@@ -10,6 +10,7 @@ import glob
 import builtins
 
 from ..utils.config import config
+from ..utils.pymol_utils import set_browser
 
 
 class ProteinBrowser:
@@ -185,6 +186,7 @@ def browse(folder_path="/home/mullagaliamova/ClaudeWorkspace/PROJECTS/cdr-h3-fol
     global _browser_instance
     _browser_instance = ProteinBrowser(folder_path)
     builtins._protein_browser = _browser_instance
+    set_browser(_browser_instance)
 
 
 def get_browser():
