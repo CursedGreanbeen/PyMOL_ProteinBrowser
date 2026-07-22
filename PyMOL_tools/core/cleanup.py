@@ -1,27 +1,50 @@
 from pymol import cmd
+from pathlib import Path
 from ..utils.pymol_utils import get_current_object, get_selected_chains, _get_sequence_from_pymol, save_cif
 from ..utils.fasta_handler import read_fasta_file, write_fasta_file, parse_fasta, serialize_fasta, remove_chain, update_sequence
 from ..utils.config import config
 
 
-def _run_cleanup_pipeline(delete_fn: callable, fasta_fn: callable) -> None:
+def _run_cleanup_pipeline(
+    delete_fn: callable,
+    fasta_fn: callable,
+    obj_name: str | None = None,
+    cif_path: str | None = None,
+    fasta_path: str | None = None,
+) -> None:
     """
     Общий pipeline для операций очистки/обрезки.
     delete_fn — выполняет операцию в PyMOL.
     fasta_fn  — принимает dict[str, FastaRecord], возвращает обновлённый dict.
     """
-    obj_name = get_current_object()
+
+    if obj_name is None:
+        try:
+            obj_name = get_current_object()
+        except RuntimeError:
+            print("[cleanup] Браузер не инициализирован. Передайте obj_name явно: crop_range('model').")
+            return
+
+    if cif_path is None:
+        cif_path = config.get_cif_path(obj_name)
+    else:
+        cif_path = Path(cif_path)
+
+    if fasta_path is None:
+        fasta_path = config.get_fasta_path(obj_name)
+    else:
+        fasta_path = Path(fasta_path)
+        
     chains = get_selected_chains()
-
     delete_fn(chains)
+    save_cif(obj_name, str(cif_path))
 
-    cif_path = config.get_cif_path(obj_name)
-    save_cif(obj_name, cif_path)
-
-    fasta_path = config.get_fasta_path(obj_name)
-    records = parse_fasta(read_fasta_file(fasta_path))
-    updated = fasta_fn(records, chains)
-    write_fasta_file(fasta_path, serialize_fasta(updated))
+    if fasta_path.exists():
+        records = parse_fasta(read_fasta_file(fasta_path))
+        updated = fasta_fn(records, chains)
+        write_fasta_file(fasta_path, serialize_fasta(updated))
+    else:
+        print(f"[cleanup] FASTA не найден, пропускаем: {fasta_path}")
 
 
 def cleanup_selected_chains() -> None:

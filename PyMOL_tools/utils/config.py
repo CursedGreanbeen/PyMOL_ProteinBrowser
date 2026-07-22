@@ -85,6 +85,18 @@ class Config:
         self._session_cif_original_folder = None
         self._session_fasta_folder = None
         self._session_fasta_original_folder = None
+    
+    def get_cif_path(self, obj_name: str) -> Path:
+        return self.get_cif_folder() / f"{obj_name}.cif"
+    
+    def get_fasta_path(self, obj_name: str) -> Path:
+        return self.get_fasta_folder() / f"{obj_name}.fasta"
+    
+    def get_original_cif_path(self, obj_name: str) -> Path:
+        return self.get_cif_original_folder() / f"{obj_name}.cif"
+    
+    def get_original_fasta_path(self, obj_name: str) -> Path:
+        return self.get_fasta_original_folder() / f"{obj_name}.fasta"
 
 
 # Глобальный экземпляр

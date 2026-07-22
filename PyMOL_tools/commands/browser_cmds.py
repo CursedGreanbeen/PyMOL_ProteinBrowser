@@ -15,8 +15,8 @@ def _browse_previous():
 def _browse_first():
     get_browser().load_first()
 
-def _browse_spec(n: int):
-    get_browser().load_specific(int(n))
+def _browse_spec(name: str):
+    get_browser().load_specific(str(name).strip())
 
 def _browse_list():
     get_browser().list_all()
@@ -50,7 +50,7 @@ def _show_browser_commands():
     print("  browse_next()            - следующая структура")
     print("  browse_prev()            - предыдущая структура")
     print("  browse_first()           - первая структура")
-    print("  browse_spec(n)           - загрузить структуру по номеру (1-indexed)")
+    print("  browse_spec(name)        - загрузить структуру по PDB ID")
     print("  browse_list()            - показать список всех структур")
     print("  browse_color()           - раскрасить цепи в разные цвета")
     print("  show_fasta()             - показать FASTA (fasta-filtered)")

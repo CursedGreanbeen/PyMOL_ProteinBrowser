@@ -87,16 +87,19 @@ class ProteinBrowser:
         else:
             print("Это первая структура")
 
-    def load_specific(self, index):
-        """Загружает структуру по индексу (начиная с 0)"""
+    def load_specific(self, name):
+        """
+        Загружает структуру по PDB ID
+        """
         if not self.file_list:
             print("Нет файлов для загрузки")
             return
-        if 0 <= index < len(self.file_list):
-            self.current_index = index
-            self._load_current()
-        else:
-            print(f"Некорректный индекс. Доступно: 0-{len(self.file_list)-1}")
+        for i, filepath in enumerate(self.file_list):
+            if name in os.path.basename(filepath):
+                self.current_index = i
+                self._load_current()
+                return
+        print(f"Такого комплекса нет в списке")
 
     def _load_current(self):
         """Загружает текущую структуру"""
