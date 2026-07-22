@@ -27,7 +27,7 @@ def _browse_color():
 
 def _show_fasta(original: bool = False):
     """Показывает FASTA текущего объекта."""
-    obj_name = get_browser().current_object
+    obj_name = get_browser().current_obj_name
     
     if original:
         fasta_path = config.get_original_fasta_path(obj_name)

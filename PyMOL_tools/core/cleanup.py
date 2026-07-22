@@ -40,9 +40,9 @@ def _run_cleanup_pipeline(
     save_cif(obj_name, str(cif_path))
 
     if fasta_path.exists():
-        records = parse_fasta(read_fasta_file(fasta_path))
+        records = read_fasta_file(fasta_path)
         updated = fasta_fn(records, chains)
-        write_fasta_file(fasta_path, serialize_fasta(updated))
+        write_fasta_file(fasta_path, updated)
     else:
         print(f"[cleanup] FASTA не найден, пропускаем: {fasta_path}")
 
@@ -79,7 +79,8 @@ def crop_range() -> None:
     def fasta_fn(records, chains):
         for chain in chains:
             if chain in records:
-                new_seq = _get_sequence_from_pymol(chain)
+                obj_name = get_current_object()
+                new_seq = _get_sequence_from_pymol(obj_name, chain)
                 update_sequence(records, chain, new_seq)
         return records
 

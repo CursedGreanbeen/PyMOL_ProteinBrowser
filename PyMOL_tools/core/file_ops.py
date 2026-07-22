@@ -9,9 +9,10 @@ def revert_to_original(file_type: str = "both") -> None:
     file_type: "cif", "fasta" или "both"
     """
     obj_name = get_current_object()
+    pdb_id = obj_name.replace("_cropped", "")
 
     if file_type in ("cif", "both"):
-        src = config.get_original_cif_path(obj_name)
+        src = config.get_original_cif_path(pdb_id)
         dst = config.get_cif_path(obj_name)
         if src.exists():
             shutil.copy2(src, dst)
@@ -20,7 +21,7 @@ def revert_to_original(file_type: str = "both") -> None:
             print(f"[file_ops] Оригинал CIF не найден: {src}")
 
     if file_type in ("fasta", "both"):
-        src = config.get_original_fasta_path(obj_name)
+        src = config.get_original_fasta_path(pdb_id)
         dst = config.get_fasta_path(obj_name)
         if src.exists():
             shutil.copy2(src, dst)

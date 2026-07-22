@@ -22,8 +22,6 @@ def _show_cleanup_commands():
     print("  remove_non_protein()  - удалить всё, что не protein")
     print("  append_fasta(content) - добавить FASTA-записи")
     print("  crop_range()          - обрезать residues в selection")
-    print("  append_fasta(content) - добавить FASTA-записи")
-    print("  revert_to_original()  - откатить файлы к оригиналу")
     print("  set_paths(...)        - установить пути на сеанс")
     print("="*60 + "\n")
 
